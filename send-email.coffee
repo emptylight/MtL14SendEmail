@@ -1,17 +1,17 @@
 if Meteor.isClient
 	Template.sendEmailForm.events
-
-		'click button': (e,t) ->
-			致 = t.find "致"
-			主题 = t.find "主题"
-			内容 = t.find "内容"
-			Meteor.apply "sendEmail", [致, 主题, 内容]
+		'click #send': (e,t) ->
+			to = t.find "#to"
+			subject = t.find "#subject"
+			content = t.find "#content"
+			Meteor.apply "sendEmail", [to.value, subject.value, content.value]
 
 if Meteor.isServer
 	Meteor.methods
-		sendEmail: (致, 主题	, 内容)->
+		sendEmail: (to, subject, content)->
+			console.log this
 			Email.send 
 				from: "admin@localhost.com"
-				to:致
-				subject:主题
-				text:内容
+				to:to
+				subject:subject
+				text:content
